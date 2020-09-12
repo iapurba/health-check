@@ -2,6 +2,7 @@
 
 import shutil
 import sys
+import os
 
 def check_reboot():
     "Return true if the computer has pending reboot"
@@ -18,10 +19,16 @@ def check_disk_usage(disk, min_absolute, min_percent):
         return False
     return True
 
-# Check of at least 2 GB and 10% free
-if not check_disk_usage("/", 2, 10):
-    print("ERROR: Not enough disk space.")
-    sys.exit(1)
+def main():
+    if check_reboot():
+        print("Pending Reboot.")
+        sys.exit(1)
+    # Check of at least 2 GB and 10% free
+    if not check_disk_usage("/", 2, 10):
+        print("ERROR: Not enough disk space.")
+        sys.exit(1)
 
-print("Everything OK.")
-sys.exit(0)
+    print("Everything OK.")
+    sys.exit(0)
+
+main()
